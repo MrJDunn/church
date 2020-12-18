@@ -126,3 +126,83 @@ void NeumorphicStyle::drawLinearSlider(Graphics& g, int x, int y, int width, int
 		g.fillRoundedRectangle(track, cornersize);
 	}
 }
+
+void NeumorphicStyle::drawToggleButton(Graphics& g, ToggleButton& button, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+{
+	if(button.getToggleState())
+	{
+		auto cornerSize = 10.0f;
+		auto bounds = button.getLocalBounds().toFloat().reduced(5.f, 5.f);
+		auto backgroundColour = findColour(TextButton::ColourIds::buttonColourId);
+		auto baseColour = backgroundColour.withMultipliedSaturation(button.hasKeyboardFocus(true) ? 1.3f : 0.9f)
+			.withMultipliedAlpha(button.isEnabled() ? 1.0f : 0.5f);
+
+		if (shouldDrawButtonAsDown || shouldDrawButtonAsHighlighted)
+			baseColour = baseColour.contrasting(shouldDrawButtonAsDown ? 0.2f : 0.05f);
+
+		g.setColour(baseColour);
+
+		if (button.isConnectedOnLeft() || button.isConnectedOnRight())
+		{
+			Path path;
+			path.addRoundedRectangle(bounds.getX() + 4, bounds.getY() + 4,
+				bounds.getWidth() - 4, bounds.getHeight() - 4,
+				cornerSize, cornerSize,
+				!button.isConnectedOnLeft(),
+				!button.isConnectedOnRight(),
+				!button.isConnectedOnLeft(),
+				!button.isConnectedOnRight());
+
+			g.fillPath(path);
+
+			g.setColour(button.findColour(ComboBox::outlineColourId).darker());
+			g.strokePath(path, PathStrokeType(1.0f));
+		}
+		else
+		{
+			float shadowDepth = 1.5f;
+			int w = button.getWidth();
+			int h = button.getHeight();
+
+			// N
+			g.setGradientFill(ColourGradient(colours.darkShadow, 0, 0,
+				colours.invisible, w, shadowDepth, false));
+			g.fillRoundedRectangle(bounds, cornerSize);
+
+			// W
+			g.setGradientFill(ColourGradient(colours.lightShadow, w, h,
+				colours.invisible, w - shadowDepth, 0, false));
+			g.fillRoundedRectangle(bounds, cornerSize);
+
+			// S
+			g.setGradientFill(ColourGradient(colours.lightShadow, w, h,
+				colours.invisible, 0, h - shadowDepth, false));
+			g.fillRoundedRectangle(bounds, cornerSize);
+
+			// E
+			g.setGradientFill(ColourGradient(colours.darkShadow, 0, 0,
+				colours.invisible, shadowDepth, h, false));
+			g.fillRoundedRectangle(bounds, cornerSize);
+
+			// C
+			Path path;
+			path.addRoundedRectangle(bounds.getX() + shadowDepth, bounds.getY() + shadowDepth,
+				bounds.getWidth() - shadowDepth, bounds.getHeight() - shadowDepth,
+				cornerSize, cornerSize,
+				!button.isConnectedOnLeft(),
+				!button.isConnectedOnRight(),
+				!button.isConnectedOnLeft(),
+				!button.isConnectedOnRight());
+
+			DropShadow centerShadow(baseColour.darker(0.01), 5, juce::Point<int>(0, 0));
+			centerShadow.drawForPath(g, path);
+		}
+	}
+	else 
+	{
+		auto backgroundColour = findColour(TextButton::ColourIds::buttonColourId);
+
+		drawButtonBackground(g, button, backgroundColour,
+			shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown);
+	}
+}

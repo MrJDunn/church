@@ -43,6 +43,10 @@ public:
 		float minSliderPos,
 		float maxSliderPos,
 		const Slider::SliderStyle style, Slider& slider) override;
+
+	void drawToggleButton(Graphics& g, ToggleButton& button,
+		bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown);
+
 private:
 	ColourScheme colourScheme;
 	DropShadow blackShadow;

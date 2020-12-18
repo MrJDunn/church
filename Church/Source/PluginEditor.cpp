@@ -29,6 +29,8 @@ ChurchAudioProcessorEditor::ChurchAudioProcessorEditor (ChurchAudioProcessor& p)
 	sTest.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
 	sTest.setColour(Slider::trackColourId, Colour::fromRGB(149, 159, 173));
 
+	addAndMakeVisible(&tTest);
+
 }
 
 ChurchAudioProcessorEditor::~ChurchAudioProcessorEditor()
@@ -53,8 +55,10 @@ void ChurchAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
 	auto area = getLocalBounds();
+	auto column = area.removeFromLeft(getWidth()/2);
 
-	bTest.setBounds(area.removeFromTop(50).reduced(10));
-	sTest.setBounds(area.removeFromTop(50).reduced(10));
+	bTest.setBounds(column.removeFromTop(100).reduced(10));
+	sTest.setBounds(column.removeFromTop(100).reduced(10));
+	tTest.setBounds(column.removeFromTop(100).reduced(10));
 
 }

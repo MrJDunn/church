@@ -36,6 +36,7 @@ private:
 	NeumorphicStyle style;
 
 	TextButton bTest;
+	ToggleButton tTest;
 	Slider sTest;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChurchAudioProcessorEditor)
