@@ -97,6 +97,9 @@ void ChurchAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+
+	reverb.reset();
+	reverb.setSampleRate(sampleRate);
 }
 
 void ChurchAudioProcessor::releaseResources()
@@ -153,9 +156,10 @@ void ChurchAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer&
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
     }
+
+	reverb.processStereo(buffer.getWritePointer(0), buffer.getWritePointer(1), getBlockSize());
+
 }
 
 //==============================================================================

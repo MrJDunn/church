@@ -6,6 +6,12 @@
               companyName="Audimancy">
   <MAINGROUP id="aBBrk0" name="Church">
     <GROUP id="{3BFE0F37-4691-E6C1-BD29-E8106D918985}" name="Source">
+      <GROUP id="{AB9CBD98-1419-2CC7-4A02-29496ABBF7EF}" name="Style">
+        <FILE id="YVND99" name="NeumorphicStyle.cpp" compile="1" resource="0"
+              file="Source/Style/NeumorphicStyle.cpp"/>
+        <FILE id="a2Bgd2" name="NeumorphicStyle.h" compile="0" resource="0"
+              file="Source/Style/NeumorphicStyle.h"/>
+      </GROUP>
       <FILE id="H8tlPw" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="zM2lRu" name="PluginProcessor.h" compile="0" resource="0"

@@ -18,10 +18,22 @@ ChurchAudioProcessorEditor::ChurchAudioProcessorEditor (ChurchAudioProcessor& p)
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
+
+	setLookAndFeel(&style);
+	LookAndFeel::setDefaultLookAndFeel(&style);
+
+	//--------------------------------------------------------------------------
+	addAndMakeVisible(&bTest);
+
+	addAndMakeVisible(&sTest);
+	sTest.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+	sTest.setColour(Slider::trackColourId, Colour::fromRGB(149, 159, 173));
+
 }
 
 ChurchAudioProcessorEditor::~ChurchAudioProcessorEditor()
 {
+	setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -39,4 +51,10 @@ void ChurchAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+
+	auto area = getLocalBounds();
+
+	bTest.setBounds(area.removeFromTop(50).reduced(10));
+	sTest.setBounds(area.removeFromTop(50).reduced(10));
+
 }
