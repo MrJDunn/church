@@ -187,6 +187,78 @@ void ChurchAudioProcessor::setStateInformation (const void* data, int sizeInByte
     // whose contents will have been created by the getStateInformation() call.
 }
 
+void ChurchAudioProcessor::setRoomSize(float newVal)
+{
+	auto state = reverb.getParameters();
+	state.roomSize = newVal;
+	reverb.setParameters(state);
+}
+
+float ChurchAudioProcessor::getRoomSize()
+{
+	return reverb.getParameters().roomSize;
+}
+
+void ChurchAudioProcessor::setDamping(float newVal)
+{
+	auto state = reverb.getParameters();
+	state.damping = newVal;
+	reverb.setParameters(state);
+}
+
+float ChurchAudioProcessor::getDamping()
+{
+	return reverb.getParameters().damping;
+}
+
+void ChurchAudioProcessor::setWetLevel(float newVal)
+{
+	auto state = reverb.getParameters();
+	state.wetLevel = newVal;
+	reverb.setParameters(state);
+}
+
+float ChurchAudioProcessor::getWetLevel()
+{
+	return reverb.getParameters().wetLevel;
+}
+
+void ChurchAudioProcessor::setDryLevel(float newVal)
+{
+	auto state = reverb.getParameters();
+	state.dryLevel = newVal;
+	reverb.setParameters(state);
+}
+
+float ChurchAudioProcessor::getDryLevel()
+{
+	return reverb.getParameters().dryLevel;
+}
+
+void ChurchAudioProcessor::setWidth(float newVal)
+{
+	auto state = reverb.getParameters();
+	state.width = newVal;
+	reverb.setParameters(state);
+}
+
+float ChurchAudioProcessor::getWidth()
+{
+	return reverb.getParameters().width;
+}
+
+void ChurchAudioProcessor::setFreezeMode(float newVal)
+{
+	auto state = reverb.getParameters();
+	state.freezeMode = newVal;
+	reverb.setParameters(state);
+}
+
+float ChurchAudioProcessor::getFreezeMode()
+{
+	return reverb.getParameters().freezeMode;
+}
+
 //==============================================================================
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()

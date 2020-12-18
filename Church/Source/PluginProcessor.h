@@ -55,6 +55,25 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+	//==============================================================================
+	void setRoomSize(float);
+	float getRoomSize();
+
+	void setDamping(float);
+	float getDamping();
+
+	void setWetLevel(float);
+	float getWetLevel();
+
+	void setDryLevel(float);
+	float getDryLevel ();
+
+	void setWidth(float);
+	float getWidth();
+
+	void setFreezeMode(float);
+	float getFreezeMode();
+
 private:
 
 	Reverb reverb;

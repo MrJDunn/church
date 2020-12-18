@@ -39,5 +39,13 @@ private:
 	ToggleButton tTest;
 	Slider sTest;
 
+	Slider sRoomSize;
+	Slider sDamping;
+	Slider sWetLEvel;
+	Slider sDryLEvel;
+	Slider sWidth;
+	Slider sFreezeMode;
+
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChurchAudioProcessorEditor)
 };

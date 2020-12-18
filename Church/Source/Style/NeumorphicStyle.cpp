@@ -186,8 +186,8 @@ void NeumorphicStyle::drawToggleButton(Graphics& g, ToggleButton& button, bool s
 
 			// C
 			Path path;
-			path.addRoundedRectangle(bounds.getX() + shadowDepth, bounds.getY() + shadowDepth,
-				bounds.getWidth() - shadowDepth, bounds.getHeight() - shadowDepth,
+			path.addRoundedRectangle(bounds.getX() + shadowDepth * 2, bounds.getY() + shadowDepth * 2,
+				bounds.getWidth() - shadowDepth * 2, bounds.getHeight() - shadowDepth * 2,
 				cornerSize, cornerSize,
 				!button.isConnectedOnLeft(),
 				!button.isConnectedOnRight(),
