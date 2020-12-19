@@ -18,6 +18,16 @@
 class ChurchAudioProcessor  : public AudioProcessor
 {
 public:
+	struct StateVariable
+	{
+		const String roomSize	 = "roomSize";
+		const String damping	 = "damping";
+		const String wetLevel	 = "wetLevel";
+		const String dryLevel	 = "dryLevel";
+		const String width		 = "width";
+		const String freezeMode  = "freezeMode";
+	} stateVariable;
+
     //==============================================================================
     ChurchAudioProcessor();
     ~ChurchAudioProcessor();
@@ -56,6 +66,9 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 	//==============================================================================
+	float getParameter(const String&);
+	void setParameter(const String&, float);
+
 	void setRoomSize(float);
 	float getRoomSize();
 
@@ -76,7 +89,16 @@ public:
 
 private:
 
+	AudioProcessorValueTreeState parameters;
 	Reverb reverb;
+
+	float* roomSizeParameter   = nullptr;
+	float* dampingParameter	   = nullptr;
+	float* wetLevelParameter   = nullptr;
+	float* dryLevelParameter   = nullptr;
+	float* widthParameter      = nullptr;
+	float* freezeModeParameter = nullptr;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChurchAudioProcessor)
 };

@@ -46,12 +46,33 @@ ChurchAudioProcessorEditor::ChurchAudioProcessorEditor (ChurchAudioProcessor& p)
 	sWidth.setRange(0.0, 1.0, 0.0001);
 	sFreezeMode.setRange(0.0, 1.0, 0.0001);
 
-	sRoomSize.onValueChange = [this] { processor.setRoomSize(sRoomSize.getValue()); };
-	sDamping.onValueChange = [this] { processor.setDamping(sDamping.getValue()); };
-	sWetLEvel.onValueChange = [this] { processor.setWetLevel(sWetLEvel.getValue()); };
-	sDryLEvel.onValueChange = [this] { processor.setDryLevel(sDryLEvel.getValue()); };
-	sWidth.onValueChange = [this] { processor.setWidth(sWidth.getValue()); };
-	sFreezeMode.onValueChange = [this] { processor.setFreezeMode(sFreezeMode.getValue()); };
+	sRoomSize.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+	sDamping.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+	sWetLEvel.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+	sDryLEvel.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+	sWidth.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+	sFreezeMode.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+
+	sRoomSize.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
+	sDamping.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
+	sWetLEvel.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
+	sDryLEvel.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
+	sWidth.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
+	sFreezeMode.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
+
+	sRoomSize.onValueChange   = [this] { processor.setParameter(processor.stateVariable.roomSize, sRoomSize.getValue()); };
+	sDamping.onValueChange    = [this] { processor.setParameter(processor.stateVariable.damping, sDamping.getValue()); };
+	sWetLEvel.onValueChange   = [this] { processor.setParameter(processor.stateVariable.wetLevel, sWetLEvel.getValue()); };
+	sDryLEvel.onValueChange   = [this] { processor.setParameter(processor.stateVariable.dryLevel, sDryLEvel.getValue()); };
+	sWidth.onValueChange	  = [this] { processor.setParameter(processor.stateVariable.width, sWidth.getValue()); };
+	sFreezeMode.onValueChange = [this] { processor.setParameter(processor.stateVariable.freezeMode, sFreezeMode.getValue()); };
+
+	sRoomSize.setValue(processor.getParameter(processor.stateVariable.roomSize), dontSendNotification);
+	sDamping.setValue(processor.getParameter(processor.stateVariable.damping), dontSendNotification);
+	sWetLEvel.setValue(processor.getParameter(processor.stateVariable.wetLevel), dontSendNotification);
+	sDryLEvel.setValue(processor.getParameter(processor.stateVariable.dryLevel), dontSendNotification);
+	sWidth.setValue(processor.getParameter(processor.stateVariable.width), dontSendNotification);
+	sFreezeMode.setValue(processor.getParameter(processor.stateVariable.freezeMode), dontSendNotification);
 }
 
 ChurchAudioProcessorEditor::~ChurchAudioProcessorEditor()
@@ -62,12 +83,7 @@ ChurchAudioProcessorEditor::~ChurchAudioProcessorEditor()
 //==============================================================================
 void ChurchAudioProcessorEditor::paint (Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-
-    g.setColour (Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
 }
 
 void ChurchAudioProcessorEditor::resized()
