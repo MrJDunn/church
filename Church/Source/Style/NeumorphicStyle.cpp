@@ -93,6 +93,11 @@ void NeumorphicStyle::drawLinearSlider(Graphics& g, int x, int y, int width, int
 		g.setColour(slider.findColour(Slider::trackColourId));
 		g.fillRoundedRectangle(track, cornersize);
 	}
+
+	auto text = slider.getName(); // String(slider.getValue());
+
+	g.setColour(findColour(TextButton::ColourIds::textColourOffId));
+	g.drawFittedText(text, slider.getLocalBounds(), Justification::centred, 1);
 }
 
 void NeumorphicStyle::drawToggleButton(Graphics& g, ToggleButton& button, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
@@ -167,7 +172,7 @@ void NeumorphicStyle::drawRotarySlider(Graphics& g, int x, int y, int width, int
 		g.strokePath(valueArc, PathStrokeType(lineW, PathStrokeType::curved, PathStrokeType::rounded));
 	}
 
-	auto text = String(slider.getValue());
+	auto text = slider.getName(); // String(slider.getValue());
 
 	g.setColour(findColour(TextButton::ColourIds::textColourOffId));
 	g.drawFittedText(text, slider.getLocalBounds(), Justification::centred, 1);

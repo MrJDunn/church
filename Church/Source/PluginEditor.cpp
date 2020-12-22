@@ -91,12 +91,13 @@ ChurchAudioProcessorEditor::ChurchAudioProcessorEditor (ChurchAudioProcessor& p)
 
 	sDamping.setColour(Slider::rotarySliderFillColourId, trackColour);
 	sWidth.setColour(Slider::rotarySliderFillColourId, trackColour);
-
-	sWetLevel.setColour(Slider::trackColourId, trackColour);
-	sDryLevel.setColour(Slider::trackColourId, trackColour);
+	sWetLevel.setColour(Slider::rotarySliderFillColourId, trackColour);
+	sDryLevel.setColour(Slider::rotarySliderFillColourId, trackColour);
 
 	sDamping.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
 	sWidth.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+	sWetLevel.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+	sDryLevel.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
 
 	//--------------------------------------------------------------------------
 	sDamping.onValueChange    = [this] { processor.setParameter(processor.stateVariable.damping, sDamping.getValue()); };
@@ -142,7 +143,10 @@ void ChurchAudioProcessorEditor::resized()
 	sDamping.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth() / 2.f));
 	sWidth.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth()));
 
-	sWetLevel.setBounds(column.removeFromTop(h).reduced(12));
-	sDryLevel.setBounds(column.removeFromTop(h).reduced(12));
+	auto rowWetAndDry = column.removeFromTop(h * 1.61803398875);
+
+	sWetLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth() / 2.f));
+	sDryLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth()));
+
 	tFreezeMode.setBounds(column.removeFromTop(h).reduced(10));
 }

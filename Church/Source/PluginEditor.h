@@ -41,10 +41,10 @@ private:
 	ToggleButton tRoomSizeMedium{"M"};
 	ToggleButton tRoomSizeLarge{"L"};
 
-	Slider sDamping;
-	Slider sWetLevel;
-	Slider sDryLevel;
-	Slider sWidth;
+	Slider sDamping{"damp"};
+	Slider sWetLevel{"wet"};
+	Slider sDryLevel{"dry"};
+	Slider sWidth{"width"};
 	ToggleButton tFreezeMode{"freeze"};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChurchAudioProcessorEditor)
