@@ -17,19 +17,10 @@ ChurchAudioProcessorEditor::ChurchAudioProcessorEditor (ChurchAudioProcessor& p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (200, 300);
 
 	setLookAndFeel(&style);
 	LookAndFeel::setDefaultLookAndFeel(&style);
-
-	//--------------------------------------------------------------------------
-	addAndMakeVisible(&bTest);
-
-	addAndMakeVisible(&sTest);
-	sTest.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-	sTest.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));// 149, 159, 173));
-
-	addAndMakeVisible(&tTest);
 
 	//--------------------------------------------------------------------------
 	addAndMakeVisible(tRoomSizeSmall);
@@ -86,26 +77,35 @@ ChurchAudioProcessorEditor::ChurchAudioProcessorEditor (ChurchAudioProcessor& p)
 	addAndMakeVisible(tFreezeMode);
 
 	sDamping.setRange(0.0, 1.0, 0.0001);
+	sWidth.setRange(0.0, 1.0, 0.0001);
+
 	sWetLevel.setRange(0.0, 1.0, 0.0001);
 	sDryLevel.setRange(0.0, 1.0, 0.0001);
-	sWidth.setRange(0.0, 1.0, 0.0001);
 
 	sDamping.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
 	sWetLevel.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
 	sDryLevel.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
 	sWidth.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
 
-	sDamping.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
-	sWetLevel.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
-	sDryLevel.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
-	sWidth.setColour(Slider::trackColourId, Colour::fromRGB(186, 140, 200));
+	auto trackColour = Colour::fromRGB(224, 179, 16);
 
+	sDamping.setColour(Slider::rotarySliderFillColourId, trackColour);
+	sWidth.setColour(Slider::rotarySliderFillColourId, trackColour);
+
+	sWetLevel.setColour(Slider::trackColourId, trackColour);
+	sDryLevel.setColour(Slider::trackColourId, trackColour);
+
+	sDamping.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+	sWidth.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+
+	//--------------------------------------------------------------------------
 	sDamping.onValueChange    = [this] { processor.setParameter(processor.stateVariable.damping, sDamping.getValue()); };
 	sWetLevel.onValueChange   = [this] { processor.setParameter(processor.stateVariable.wetLevel, sWetLevel.getValue()); };
 	sDryLevel.onValueChange   = [this] { processor.setParameter(processor.stateVariable.dryLevel, sDryLevel.getValue()); };
 	sWidth.onValueChange	  = [this] { processor.setParameter(processor.stateVariable.width, sWidth.getValue()); };
 	tFreezeMode.onClick		  = [this] { processor.setParameter(processor.stateVariable.freezeMode, tFreezeMode.getToggleState()); };
 
+	//--------------------------------------------------------------------------
 	sDamping.setValue(processor.getParameter(processor.stateVariable.damping), dontSendNotification);
 	sWetLevel.setValue(processor.getParameter(processor.stateVariable.wetLevel), dontSendNotification);
 	sDryLevel.setValue(processor.getParameter(processor.stateVariable.dryLevel), dontSendNotification);
@@ -126,15 +126,9 @@ void ChurchAudioProcessorEditor::paint (Graphics& g)
 
 void ChurchAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
-
 	auto area = getLocalBounds();
-	auto column = area.removeFromLeft(getWidth()/2);
+	auto column = area.removeFromLeft(getWidth()).reduced(5);
 
-	//bTest.setBounds(column.removeFromTop(100).reduced(10));
-	//sTest.setBounds(column.removeFromTop(100).reduced(10));
-	//tTest.setBounds(column.removeFromTop(100).reduced(10));
 	int h = 50;
 
 	auto rowRoomSize = column.removeFromTop(h);
@@ -143,9 +137,12 @@ void ChurchAudioProcessorEditor::resized()
 	tRoomSizeMedium.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth() / 2.f).reduced(2));
 	tRoomSizeLarge.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth()).reduced(2));
 
-	sDamping.setBounds(column.removeFromTop(h).reduced(10));
-	sWetLevel.setBounds(column.removeFromTop(h).reduced(10));
-	sDryLevel.setBounds(column.removeFromTop(h).reduced(10));
-	sWidth.setBounds(column.removeFromTop(h).reduced(10));
+	auto rowDampAndWidth = column.removeFromTop(h * 1.61803398875);
+
+	sDamping.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth() / 2.f));
+	sWidth.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth()));
+
+	sWetLevel.setBounds(column.removeFromTop(h).reduced(12));
+	sDryLevel.setBounds(column.removeFromTop(h).reduced(12));
 	tFreezeMode.setBounds(column.removeFromTop(h).reduced(10));
 }

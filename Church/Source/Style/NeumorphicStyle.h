@@ -28,8 +28,7 @@ public:
 		Colour lightShadow = Colour::fromRGBA(255, 255, 255, 127);
 		Colour darkShadow  = Colour::fromRGBA(159, 167, 180, 127);
 
-		Colour textColour = Colour::fromRGB(205, 214, 227);
-
+		Colour textColour = Colour::fromRGB(105, 114, 127);
 	} colours;
 
 	NeumorphicStyle();
@@ -47,7 +46,16 @@ public:
 	void drawToggleButton(Graphics& g, ToggleButton& button,
 		bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown);
 
+	void drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
+		const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider);
+
 private:
+
+	void drawConcaveButton(Graphics& g, Button& button, const Colour& backgroundColour,
+		bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown);
+	void drawConvexButton(Graphics& g, Button& button, const Colour& backgroundColour,
+		bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown);
+
 	ColourScheme colourScheme;
 	DropShadow blackShadow;
 	DropShadow whiteShadow;

@@ -35,21 +35,17 @@ private:
 
 	NeumorphicStyle style;
 
-	TextButton bTest;
-	ToggleButton tTest;
-	Slider sTest;
-
 	Slider sRoomSize;
 
-	ToggleButton tRoomSizeSmall;
-	ToggleButton tRoomSizeMedium;
-	ToggleButton tRoomSizeLarge;
+	ToggleButton tRoomSizeSmall{"S"};
+	ToggleButton tRoomSizeMedium{"M"};
+	ToggleButton tRoomSizeLarge{"L"};
 
 	Slider sDamping;
 	Slider sWetLevel;
 	Slider sDryLevel;
 	Slider sWidth;
-	ToggleButton tFreezeMode{"FreezeMode"};
+	ToggleButton tFreezeMode{"freeze"};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChurchAudioProcessorEditor)
 };
