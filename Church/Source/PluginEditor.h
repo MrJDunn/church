@@ -40,11 +40,16 @@ private:
 	Slider sTest;
 
 	Slider sRoomSize;
+
+	ToggleButton tRoomSizeSmall;
+	ToggleButton tRoomSizeMedium;
+	ToggleButton tRoomSizeLarge;
+
 	Slider sDamping;
-	Slider sWetLEvel;
-	Slider sDryLEvel;
+	Slider sWetLevel;
+	Slider sDryLevel;
 	Slider sWidth;
-	Slider sFreezeMode;
+	ToggleButton tFreezeMode{"FreezeMode"};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChurchAudioProcessorEditor)
 };

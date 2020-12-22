@@ -29,7 +29,7 @@ ChurchAudioProcessor::ChurchAudioProcessor()
 				std::make_unique<AudioParameterFloat>(stateVariable.wetLevel,	  "Wet Level", 0.0, 1.0, 0.33f),
 				std::make_unique<AudioParameterFloat>(stateVariable.dryLevel,	  "Dry Level", 0.0, 1.0, 0.4f),
 				std::make_unique<AudioParameterFloat>(stateVariable.width,			  "Width", 0.0, 1.0, 1.0f),
-				std::make_unique<AudioParameterFloat>(stateVariable.freezeMode, "Freeze Mode", 0.0, 1.0, 0.0f)
+				std::make_unique<AudioParameterBool> (stateVariable.freezeMode, "Freeze Mode", false)
 		})
 #endif
 {
