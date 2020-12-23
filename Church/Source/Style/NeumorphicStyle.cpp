@@ -28,6 +28,7 @@ NeumorphicStyle::NeumorphicStyle() :
 	whiteShadow(colours.lightShadow, 5, juce::Point<int>(-4, -4))
 {
 	setColourScheme(colourScheme);
+	setDefaultSansSerifTypeface(Typeface::createSystemTypefaceFor(BinaryData::lcd_display_ttf, BinaryData::lcd_display_ttfSize));
 }
 
 NeumorphicStyle::~NeumorphicStyle()

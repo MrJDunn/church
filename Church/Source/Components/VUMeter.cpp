@@ -152,7 +152,20 @@ void VUMeter::drawNeedle(Graphics& g)
 	auto area = getLocalBounds();
 
 	g.setColour(getLookAndFeel().findColour(Slider::ColourIds::textBoxTextColourId));
-	g.drawText(String(int(20 * log10(needleValue))) + " db", area.reduced(50), Justification::centred, false);
+	
+	g.setFont(getLookAndFeel().getLabelFont(Label()).withHeight(20.f));
+
+	int dbValue = 20 * log10(needleValue);
+
+	// left
+	g.drawText(String(dbValue / 10), area.withX(area.getX() - 15), Justification::centred, false);
+
+	// mid
+	g.drawText(String(abs(dbValue % 10)), area, Justification::centred, false);
+
+	// right
+	g.drawText("db", area.withX(area.getX() + 20), Justification::centred, false);
+
 	//g.setColour(Colour(53,57,62));
 
 	//Point<float> start(getWidth() / 2.0f - 2.0f, getHeight() * 1.33f);

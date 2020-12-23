@@ -24,6 +24,7 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="DkVeOa" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
+    <FILE id="YbtNgm" name="lcd_display.ttf" compile="0" resource="1" file="../../../../../Downloads/digital-7-font/lcd_display.ttf"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2017 targetFolder="Builds/VisualStudio2017">
