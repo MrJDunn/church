@@ -138,7 +138,7 @@ void NeumorphicStyle::drawRotarySlider(Graphics& g, int x, int y, int width, int
 
 	auto radius = jmin(bounds.getWidth(), bounds.getHeight()) / 2.0f;
 	auto toAngle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
-	auto lineW = jmin(8.0f, radius * 0.5f);
+	auto lineW = jmin(6.0f, radius * 0.5f);
 	auto arcRadius = radius - lineW * 0.5f;
 
 	Path backgroundArc;
@@ -147,15 +147,23 @@ void NeumorphicStyle::drawRotarySlider(Graphics& g, int x, int y, int width, int
 		arcRadius,
 		arcRadius,
 		0.0f,
-		rotaryStartAngle,
-		rotaryEndAngle,
+		0,//rotaryStartAngle - 30,
+		360,//rotaryEndAngle + 30,
 		true);
 
 	blackShadow.drawForPath(g, backgroundArc);
 	whiteShadow.drawForPath(g, backgroundArc);
 
-	g.setColour(outline);
+	//g.setColour(outline);
+	g.setGradientFill(ColourGradient(colours.darkShadow.darker(0.5f), bounds.getTopLeft(),
+		colours.lightShadow.brighter(0.5f), bounds.getBottomRight(), false));
 	g.strokePath(backgroundArc, PathStrokeType(lineW, PathStrokeType::curved, PathStrokeType::rounded));
+
+	// Fill center of dial
+	g.setColour(Colour::fromRGB(219, 227, 188));
+	g.setGradientFill(ColourGradient(Colour::fromRGB(219, 227, 188).darker(0.5f), bounds.getTopLeft(),
+		Colour::fromRGB(219, 227, 188).brighter(0.5f), bounds.getBottomRight(), false));
+	g.fillPath(backgroundArc);
 
 	if (slider.isEnabled())
 	{
@@ -170,13 +178,40 @@ void NeumorphicStyle::drawRotarySlider(Graphics& g, int x, int y, int width, int
 			true);
 
 		g.setColour(fill);
-		g.strokePath(valueArc, PathStrokeType(lineW, PathStrokeType::curved, PathStrokeType::rounded));
+		//g.strokePath(valueArc, PathStrokeType(lineW, PathStrokeType::curved, PathStrokeType::rounded));
 	}
 
-	auto text = slider.getName(); // String(slider.getValue());
+	auto text = String(int(100 * slider.getValue())); //slider.getName(); //
 
 	g.setColour(findColour(TextButton::ColourIds::textColourOffId));
 	g.drawFittedText(text, slider.getLocalBounds(), Justification::centred, 1);
+
+	//----------------------------------------------------------------------
+	// Thumb
+	auto thumbWidth = lineW * 2.0f;
+	Point<float> thumbPoint(bounds.getCentreX() + arcRadius * std::cos(toAngle - MathConstants<float>::halfPi),
+		bounds.getCentreY() + arcRadius * std::sin(toAngle - MathConstants<float>::halfPi));
+
+	//g.setColour(slider.findColour(Slider::thumbColourId));
+	//g.fillEllipse(Rectangle<float>(thumbWidth, thumbWidth).withCentre(thumbPoint));
+
+	Colour darkNonTransparent = Colour::fromRGB(colours.darkShadow.getRed(), colours.darkShadow.getGreen(), colours.darkShadow.getBlue());
+	Colour lightNonTransparent = Colour::fromRGB(colours.lightShadow.getRed(), colours.lightShadow.getGreen(), colours.lightShadow.getBlue());
+
+	Point<float> thumbTopLeftGradientOrigin = thumbPoint.withX(thumbPoint.getX() - 10).withY((thumbPoint.getY() - 10));
+	Point<float> thumbBottomRightGradientOrigin = thumbPoint.withX(thumbPoint.getX() + 10).withY((thumbPoint.getY() + 10));
+
+	// Shadow in center of dial
+	g.setGradientFill(ColourGradient(
+		darkNonTransparent, thumbTopLeftGradientOrigin,
+		lightNonTransparent, thumbBottomRightGradientOrigin, false));
+	g.fillEllipse(Rectangle<float>(thumbWidth, thumbWidth).withCentre(thumbPoint));
+
+	// Center rim
+	g.setGradientFill(ColourGradient(
+		lightNonTransparent, thumbTopLeftGradientOrigin,
+		darkNonTransparent, thumbBottomRightGradientOrigin, false));
+	g.drawEllipse(Rectangle<float>(thumbWidth, thumbWidth).withCentre(thumbPoint), 2.f);
 }
 
 //=====================================================================================
