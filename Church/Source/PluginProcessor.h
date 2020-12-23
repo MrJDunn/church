@@ -87,6 +87,8 @@ public:
 	void setFreezeMode(float);
 	float getFreezeMode();
 
+	float getGain();
+
 private:
 
 	AudioProcessorValueTreeState parameters;
@@ -98,6 +100,8 @@ private:
 	float* dryLevelParameter   = nullptr;
 	float* widthParameter      = nullptr;
 	float* freezeModeParameter = nullptr;
+
+	std::atomic<float> gain;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChurchAudioProcessor)

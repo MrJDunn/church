@@ -14,6 +14,7 @@
 #include "PluginProcessor.h"
 
 #include "Style/NeumorphicStyle.h"
+#include "Components/VUMeter.h"
 
 //==============================================================================
 /**
@@ -46,6 +47,8 @@ private:
 	Slider sDryLevel{"dry"};
 	Slider sWidth{"width"};
 	ToggleButton tFreezeMode{"freeze"};
+
+	VUMeter vuMeter;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChurchAudioProcessorEditor)
 };

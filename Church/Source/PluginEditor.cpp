@@ -13,14 +13,17 @@
 
 //==============================================================================
 ChurchAudioProcessorEditor::ChurchAudioProcessorEditor (ChurchAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+    : AudioProcessorEditor (&p), processor(p), vuMeter(p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (200, 300);
+    setSize (200, 350);
 
 	setLookAndFeel(&style);
 	LookAndFeel::setDefaultLookAndFeel(&style);
+
+	//--------------------------------------------------------------------------
+	addAndMakeVisible(vuMeter);
 
 	//--------------------------------------------------------------------------
 	addAndMakeVisible(tRoomSizeSmall);
@@ -132,18 +135,20 @@ void ChurchAudioProcessorEditor::resized()
 
 	int h = 50;
 
+	vuMeter.setBounds(column.removeFromTop(h * 2.75));
+
 	auto rowRoomSize = column.removeFromTop(h);
 
 	tRoomSizeSmall.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth() / 3.f).reduced(2));
 	tRoomSizeMedium.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth() / 2.f).reduced(2));
 	tRoomSizeLarge.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth()).reduced(2));
 
-	auto rowDampAndWidth = column.removeFromTop(h * 1.61803398875);
+	auto rowDampAndWidth = column.removeFromTop(h * 1.5);
 
 	sDamping.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth() / 2.f));
 	sWidth.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth()));
 
-	auto rowWetAndDry = column.removeFromTop(h * 1.61803398875);
+	auto rowWetAndDry = column.removeFromTop(h * 1.5);
 
 	sWetLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth() / 2.f));
 	sDryLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth()));

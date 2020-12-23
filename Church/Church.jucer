@@ -6,6 +6,10 @@
               companyName="Audimancy">
   <MAINGROUP id="aBBrk0" name="Church">
     <GROUP id="{3BFE0F37-4691-E6C1-BD29-E8106D918985}" name="Source">
+      <GROUP id="{FC64F4CD-B453-B67C-CC6E-2B6181FE7CE4}" name="Components">
+        <FILE id="RtzrFU" name="VUMeter.cpp" compile="1" resource="0" file="Source/Components/VUMeter.cpp"/>
+        <FILE id="qDrbII" name="VUMeter.h" compile="0" resource="0" file="Source/Components/VUMeter.h"/>
+      </GROUP>
       <GROUP id="{AB9CBD98-1419-2CC7-4A02-29496ABBF7EF}" name="Style">
         <FILE id="YVND99" name="NeumorphicStyle.cpp" compile="1" resource="0"
               file="Source/Style/NeumorphicStyle.cpp"/>
