@@ -17,7 +17,7 @@ ChurchAudioProcessorEditor::ChurchAudioProcessorEditor (ChurchAudioProcessor& p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (200, 350);
+    setSize (200, 370);
 
 	setLookAndFeel(&style);
 	LookAndFeel::setDefaultLookAndFeel(&style);
@@ -135,9 +135,9 @@ void ChurchAudioProcessorEditor::resized()
 
 	int h = 50;
 
-	vuMeter.setBounds(column.removeFromTop(h * 2.75));
+	vuMeter.setBounds(column.removeFromTop(h * 2.50));
 
-	auto rowRoomSize = column.removeFromTop(h);
+	auto rowRoomSize = column.removeFromTop(h - 10);
 
 	tRoomSizeSmall.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth() / 3.f).reduced(2));
 	tRoomSizeMedium.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth() / 2.f).reduced(2));
@@ -153,5 +153,5 @@ void ChurchAudioProcessorEditor::resized()
 	sWetLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth() / 2.f));
 	sDryLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth()));
 
-	tFreezeMode.setBounds(column.removeFromTop(h).reduced(10));
+	tFreezeMode.setBounds(column.removeFromTop(h).reduced(20,10));
 }

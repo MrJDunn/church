@@ -181,10 +181,11 @@ void NeumorphicStyle::drawRotarySlider(Graphics& g, int x, int y, int width, int
 		//g.strokePath(valueArc, PathStrokeType(lineW, PathStrokeType::curved, PathStrokeType::rounded));
 	}
 
-	auto text = String(int(100 * slider.getValue())); //slider.getName(); //
+	auto numericValue = String(int(100 * slider.getValue())); 
+	auto nameValue = slider.getName();
 
 	g.setColour(findColour(TextButton::ColourIds::textColourOffId));
-	g.drawFittedText(text, slider.getLocalBounds(), Justification::centred, 1);
+	g.drawFittedText(nameValue + "\n" + numericValue, slider.getLocalBounds(), Justification::centred, 1);
 
 	//----------------------------------------------------------------------
 	// Thumb
