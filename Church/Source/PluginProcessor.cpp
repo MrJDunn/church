@@ -171,17 +171,7 @@ void ChurchAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& 
 	for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
 		buffer.clear(i, 0, buffer.getNumSamples());
 
-	float avgGain = 0.f;
-
-	for (int channel = 0; channel < totalNumInputChannels; ++channel)
-	{
-		auto* channelData = buffer.getWritePointer(channel);
-		avgGain = buffer.getRMSLevel(channel, 0, blockSize);
-	}
-
-	reverb.processStereo(buffer.getWritePointer(0), buffer.getWritePointer(1), blockSize);
-
-	gain.store((float)avgGain / (float)totalNumInputChannels);
+	calculateGain(buffer);
 }
 
 //==============================================================================
@@ -330,6 +320,24 @@ float ChurchAudioProcessor::getFreezeMode()
 float ChurchAudioProcessor::getGain()
 {
 	return gain.load();
+}
+
+void ChurchAudioProcessor::calculateGain(AudioBuffer<float>& buffer)
+{
+	auto totalNumInputChannels = buffer.getNumChannels();
+	auto blockSize = buffer.getNumSamples();
+
+	float avgGain = 0.f;
+
+	for (int channel = 0; channel < totalNumInputChannels; ++channel)
+	{
+		auto* channelData = buffer.getWritePointer(channel);
+		avgGain = buffer.getRMSLevel(channel, 0, blockSize);
+	}
+
+	reverb.processStereo(buffer.getWritePointer(0), buffer.getWritePointer(1), blockSize);
+
+	gain.store((float)avgGain / (float)totalNumInputChannels);
 }
 
 //==============================================================================

@@ -159,6 +159,12 @@ void NeumorphicStyle::drawRotarySlider(Graphics& g, int x, int y, int width, int
 		colours.lightShadow.brighter(0.5f), bounds.getBottomRight(), false));
 	g.strokePath(backgroundArc, PathStrokeType(lineW, PathStrokeType::curved, PathStrokeType::rounded));
 
+	// Outline
+	auto outlineRadius = jmin(width, height) - 5;
+	auto outlineTopLeftX = slider.getWidth() / 2.f - outlineRadius / 2.f;
+	auto outlineTopLeftY = slider.getHeight() / 2.f - outlineRadius / 2.f;
+	g.drawEllipse(outlineTopLeftX, outlineTopLeftY, outlineRadius, outlineRadius, 1.f);
+
 	// Fill center of dial
 	g.setColour(Colour::fromRGB(219, 227, 188));
 	g.setGradientFill(ColourGradient(Colour::fromRGB(219, 227, 188).darker(0.5f), bounds.getTopLeft(),

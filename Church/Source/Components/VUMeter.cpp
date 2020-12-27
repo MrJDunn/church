@@ -36,11 +36,9 @@ void VUMeter::resized()
 
 void VUMeter::paint(Graphics& g)
 {
-	//drawBackground(g);
+	drawBackground(g);
 	drawDial(g);
 	drawNeedle(g);
-	//drawBorder(g);
-	//drawWindows(g);
 }
 
 void VUMeter::drawBorder(Graphics& g)
@@ -60,10 +58,10 @@ void VUMeter::drawBorder(Graphics& g)
 void VUMeter::drawBackground(Graphics & g)
 {
 	auto fill = getLookAndFeel().findColour(Slider::backgroundColourId);
-	auto bounds = getLocalBounds().reduced(24);
+	auto bounds = getLocalBounds().reduced(2);
 	auto radius = jmin(bounds.getWidth(), bounds.getHeight());	
 	int x = getLocalBounds().getWidth() / 2.f - radius / 2.f;
-	int y = 12;
+	int y = 2;
 
 	Rectangle<int> shadowArea(x, y, radius, radius);
 
@@ -71,8 +69,8 @@ void VUMeter::drawBackground(Graphics & g)
 	backGround.addEllipse(shadowArea.getX(), shadowArea.getY(),
 		shadowArea.getWidth(), shadowArea.getHeight());
 
-	blackShadow.drawForPath(g, backGround);
-	whiteShadow.drawForPath(g, backGround);
+	//blackShadow.drawForPath(g, backGround);
+	//whiteShadow.drawForPath(g, backGround);
 
 	g.setGradientFill(ColourGradient(fill, shadowArea.getCentre().getX(), shadowArea.getCentre().getY(),
 		Colours::transparentWhite, shadowArea.getCentre().getX() + radius / 2.f, shadowArea.getCentre().getY() + radius / 2.f, true));
@@ -82,7 +80,7 @@ void VUMeter::drawBackground(Graphics & g)
 	g.setGradientFill(ColourGradient(
 		Colour::fromRGB(darkShadow.getRed(), darkShadow.getGreen(), darkShadow.getBlue()), x, y,
 		Colour::fromRGB(lightShadow.getRed(), lightShadow.getGreen(), lightShadow.getBlue()), x + radius - 1, y + radius - 1, false));
-	g.drawEllipse(x, y, radius, radius, 4.f);
+	g.drawEllipse(x, y, radius, radius, 1.f);
 
 }
 
@@ -156,6 +154,11 @@ void VUMeter::drawNeedle(Graphics& g)
 	g.setFont(getLookAndFeel().getLabelFont(Label()).withHeight(20.f));
 
 	int dbValue = 20 * log10(needleValue);
+
+	if(dbValue < -100)
+	{
+		dbValue = -100;
+	}
 
 	// left
 	g.drawText(String(dbValue / 10), area.withX(area.getX() - 15), Justification::centred, false);
