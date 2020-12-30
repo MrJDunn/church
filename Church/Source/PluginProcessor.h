@@ -103,8 +103,9 @@ private:
 
 	std::atomic<float> gain;
 
+    void clearUnusedChannels(AudioBuffer<float>&);
 	void calculateGain(AudioBuffer<float>&);
-
+    void applyReverb(AudioBuffer<float>&);
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChurchAudioProcessor)
 };

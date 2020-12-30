@@ -158,19 +158,9 @@ bool ChurchAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) co
 void ChurchAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
 	ScopedNoDenormals noDenormals;
-	auto totalNumInputChannels = getTotalNumInputChannels();
-	auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-	auto blockSize = getBlockSize();
-	// In case we have more outputs than inputs, this code clears any output
-	// channels that didn't contain input data, (because these aren't
-	// guaranteed to be empty - they may contain garbage).
-	// This is here to avoid people getting screaming feedback
-	// when they first compile a plugin, but obviously you don't need to keep
-	// this code if your algorithm always overwrites all the output channels.
-	for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-		buffer.clear(i, 0, buffer.getNumSamples());
-
+    clearUnusedChannels(buffer);
+    applyReverb(buffer);
 	calculateGain(buffer);
 }
 
@@ -322,23 +312,49 @@ float ChurchAudioProcessor::getGain()
 	return gain.load();
 }
 
+void ChurchAudioProcessor::clearUnusedChannels(AudioBuffer<float>& buffer)
+{
+    auto totalNumInputChannels = getTotalNumInputChannels();
+    auto totalNumOutputChannels = getTotalNumOutputChannels();
+    
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear(i, 0, buffer.getNumSamples());
+}
+
 void ChurchAudioProcessor::calculateGain(AudioBuffer<float>& buffer)
 {
 	auto totalNumInputChannels = buffer.getNumChannels();
 	auto blockSize = buffer.getNumSamples();
 
-	float avgGain = 0.f;
-
-	for (int channel = 0; channel < totalNumInputChannels; ++channel)
-	{
-		auto* channelData = buffer.getWritePointer(channel);
-		avgGain = buffer.getRMSLevel(channel, 0, blockSize);
-	}
-
-	reverb.processStereo(buffer.getWritePointer(0), buffer.getWritePointer(1), blockSize);
+    float avgGain = 0.f;
+    
+    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    {
+        avgGain += buffer.getRMSLevel(channel, 0, blockSize);
+    }    
 
 	gain.store((float)avgGain / (float)totalNumInputChannels);
 }
+
+void ChurchAudioProcessor::applyReverb(AudioBuffer<float>& buffer)
+{
+    auto totalNumInputChannels = buffer.getNumChannels();
+    auto blockSize = buffer.getNumSamples();
+    
+    if(totalNumInputChannels == 2)
+    {
+        reverb.processStereo(buffer.getWritePointer(0), buffer.getWritePointer(1), blockSize);
+    }
+    else
+    {
+        for(int i = 0; i < totalNumInputChannels; ++i)
+        {
+            reverb.processMono(buffer.getWritePointer(i), blockSize);
+        }
+    }
+    
+}
+
 
 //==============================================================================
 // This creates new instances of the plugin..
