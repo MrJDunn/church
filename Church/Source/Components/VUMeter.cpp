@@ -69,8 +69,8 @@ void VUMeter::drawBackground(Graphics & g)
 	backGround.addEllipse(shadowArea.getX(), shadowArea.getY(),
 		shadowArea.getWidth(), shadowArea.getHeight());
 
-	//blackShadow.drawForPath(g, backGround);
-	//whiteShadow.drawForPath(g, backGround);
+    //blackShadow.drawForPath(g, backGround);
+    //whiteShadow.drawForPath(g, backGround);
 
 	g.setGradientFill(ColourGradient(fill, shadowArea.getCentre().getX(), shadowArea.getCentre().getY(),
 		Colours::transparentWhite, shadowArea.getCentre().getX() + radius / 2.f, shadowArea.getCentre().getY() + radius / 2.f, true));
@@ -151,7 +151,7 @@ void VUMeter::drawNeedle(Graphics& g)
 
 	g.setColour(getLookAndFeel().findColour(Slider::ColourIds::textBoxTextColourId));
 	
-	g.setFont(getLookAndFeel().getLabelFont(Label()).withHeight(20.f));
+	g.setFont(getLookAndFeel().getPopupMenuFont().withHeight(20.f));
 
 	int dbValue = 20 * log10(needleValue);
 
@@ -160,26 +160,13 @@ void VUMeter::drawNeedle(Graphics& g)
 		dbValue = -100;
 	}
 
-	// left
-	g.drawText(String(dbValue / 10), area.withX(area.getX() - 15), Justification::centred, false);
+    // left
+    g.drawText(String(dbValue / 10), area.withX(area.getX() - 15), Justification::centred, false);
 
-	// mid
-	g.drawText(String(abs(dbValue % 10)), area, Justification::centred, false);
+    // mid
+    g.drawText(String(abs(dbValue % 10)), area, Justification::centred, false);
 
-	// right
-	g.drawText("db", area.withX(area.getX() + 20), Justification::centred, false);
+    // right
+    g.drawText("db", area.withX(area.getX() + 20), Justification::centred, false);
 
-	//g.setColour(Colour(53,57,62));
-
-	//Point<float> start(getWidth() / 2.0f - 2.0f, getHeight() * 1.33f);
-	//Point<float> tip((float)1000 * needleValue * getWidth(), 50.0f);
-	//Point<float> end(getWidth() / 2.0f + 2.0f, getHeight() * 1.33f);
-
-	//Path needle;
-	//needle.startNewSubPath(start);
-	//needle.lineTo(tip);
-	//needle.lineTo(end);
-	//needle.closeSubPath();
-
-	//g.fillPath(needle);
 }

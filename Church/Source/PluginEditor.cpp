@@ -19,102 +19,102 @@ ChurchAudioProcessorEditor::ChurchAudioProcessorEditor (ChurchAudioProcessor& p)
     // editor's size to whatever you need it to be.
     setSize (200, 370);
 
-	setLookAndFeel(&style);
-	LookAndFeel::setDefaultLookAndFeel(&style);
+    setLookAndFeel(&style);
+    LookAndFeel::setDefaultLookAndFeel(&style);
 
-	//--------------------------------------------------------------------------
-	addAndMakeVisible(vuMeter);
+    //--------------------------------------------------------------------------
+    addAndMakeVisible(vuMeter);
 
-	//--------------------------------------------------------------------------
-	addAndMakeVisible(tRoomSizeSmall);
-	addAndMakeVisible(tRoomSizeMedium);
-	addAndMakeVisible(tRoomSizeLarge);
+    //--------------------------------------------------------------------------
+    addAndMakeVisible(tRoomSizeSmall);
+    addAndMakeVisible(tRoomSizeMedium);
+    addAndMakeVisible(tRoomSizeLarge);
 
-	tRoomSizeSmall.onClick = [this]
-	{ 
-		tRoomSizeSmall.setToggleState(true, dontSendNotification);
-		tRoomSizeMedium.setToggleState(false, dontSendNotification);
-		tRoomSizeLarge.setToggleState(false, dontSendNotification);
-		processor.setParameter(processor.stateVariable.roomSize, 0.1); 
-	};
-	tRoomSizeMedium.onClick = [this]
-	{
-		tRoomSizeSmall.setToggleState(false, dontSendNotification);
-		tRoomSizeMedium.setToggleState(true, dontSendNotification);
-		tRoomSizeLarge.setToggleState(false, dontSendNotification);
-		processor.setParameter(processor.stateVariable.roomSize, 0.5);
-	};
-	tRoomSizeLarge.onClick = [this]
-	{
-		tRoomSizeSmall.setToggleState(false, dontSendNotification);
-		tRoomSizeMedium.setToggleState(false, dontSendNotification);
-		tRoomSizeLarge.setToggleState(true, dontSendNotification);
-		processor.setParameter(processor.stateVariable.roomSize, 0.9);
-	};
+    tRoomSizeSmall.onClick = [this]
+    {
+        tRoomSizeSmall.setToggleState(true, dontSendNotification);
+        tRoomSizeMedium.setToggleState(false, dontSendNotification);
+        tRoomSizeLarge.setToggleState(false, dontSendNotification);
+        processor.setParameter(processor.stateVariable.roomSize, 0.1);
+    };
+    tRoomSizeMedium.onClick = [this]
+    {
+        tRoomSizeSmall.setToggleState(false, dontSendNotification);
+        tRoomSizeMedium.setToggleState(true, dontSendNotification);
+        tRoomSizeLarge.setToggleState(false, dontSendNotification);
+        processor.setParameter(processor.stateVariable.roomSize, 0.5);
+    };
+    tRoomSizeLarge.onClick = [this]
+    {
+        tRoomSizeSmall.setToggleState(false, dontSendNotification);
+        tRoomSizeMedium.setToggleState(false, dontSendNotification);
+        tRoomSizeLarge.setToggleState(true, dontSendNotification);
+        processor.setParameter(processor.stateVariable.roomSize, 0.9);
+    };
 
-	float roomSizeValue = processor.getParameter(processor.stateVariable.roomSize);
-	if(roomSizeValue < 0.5)
-	{
-		tRoomSizeSmall.setToggleState(true, dontSendNotification);
-		tRoomSizeMedium.setToggleState(false, dontSendNotification);
-		tRoomSizeLarge.setToggleState(false, dontSendNotification);
-	}
-	else if(roomSizeValue >= 0.5 && roomSizeValue < 0.9)
-	{
-		tRoomSizeSmall.setToggleState(false, dontSendNotification);
-		tRoomSizeMedium.setToggleState(true, dontSendNotification);
-		tRoomSizeLarge.setToggleState(false, dontSendNotification);
-	}
-	else 
-	{
-		tRoomSizeSmall.setToggleState(false, dontSendNotification);
-		tRoomSizeMedium.setToggleState(false, dontSendNotification);
-		tRoomSizeLarge.setToggleState(true, dontSendNotification);
-	}
+    float roomSizeValue = processor.getParameter(processor.stateVariable.roomSize);
+    if(roomSizeValue < 0.5)
+    {
+        tRoomSizeSmall.setToggleState(true, dontSendNotification);
+        tRoomSizeMedium.setToggleState(false, dontSendNotification);
+        tRoomSizeLarge.setToggleState(false, dontSendNotification);
+    }
+    else if(roomSizeValue >= 0.5 && roomSizeValue < 0.9)
+    {
+        tRoomSizeSmall.setToggleState(false, dontSendNotification);
+        tRoomSizeMedium.setToggleState(true, dontSendNotification);
+        tRoomSizeLarge.setToggleState(false, dontSendNotification);
+    }
+    else
+    {
+        tRoomSizeSmall.setToggleState(false, dontSendNotification);
+        tRoomSizeMedium.setToggleState(false, dontSendNotification);
+        tRoomSizeLarge.setToggleState(true, dontSendNotification);
+    }
 
-	//--------------------------------------------------------------------------
-	addAndMakeVisible(sDamping);
-	addAndMakeVisible(sWetLevel);
-	addAndMakeVisible(sDryLevel);
-	addAndMakeVisible(sWidth);
-	addAndMakeVisible(tFreezeMode);
+    //--------------------------------------------------------------------------
+    addAndMakeVisible(sDamping);
+    addAndMakeVisible(sWetLevel);
+    addAndMakeVisible(sDryLevel);
+    addAndMakeVisible(sWidth);
+    addAndMakeVisible(tFreezeMode);
 
-	sDamping.setRange(0.0, 1.0, 0.0001);
-	sWidth.setRange(0.0, 1.0, 0.0001);
+    sDamping.setRange(0.0, 1.0, 0.0001);
+    sWidth.setRange(0.0, 1.0, 0.0001);
 
-	sWetLevel.setRange(0.0, 1.0, 0.0001);
-	sDryLevel.setRange(0.0, 1.0, 0.0001);
+    sWetLevel.setRange(0.0, 1.0, 0.0001);
+    sDryLevel.setRange(0.0, 1.0, 0.0001);
 
-	sDamping.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-	sWetLevel.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-	sDryLevel.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-	sWidth.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+    sDamping.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+    sWetLevel.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+    sDryLevel.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+    sWidth.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
 
-	auto trackColour = Colour::fromRGB(224, 179, 16);
+    auto trackColour = Colour::fromRGB(224, 179, 16);
 
-	sDamping.setColour(Slider::rotarySliderFillColourId, trackColour);
-	sWidth.setColour(Slider::rotarySliderFillColourId, trackColour);
-	sWetLevel.setColour(Slider::rotarySliderFillColourId, trackColour);
-	sDryLevel.setColour(Slider::rotarySliderFillColourId, trackColour);
+    sDamping.setColour(Slider::rotarySliderFillColourId, trackColour);
+    sWidth.setColour(Slider::rotarySliderFillColourId, trackColour);
+    sWetLevel.setColour(Slider::rotarySliderFillColourId, trackColour);
+    sDryLevel.setColour(Slider::rotarySliderFillColourId, trackColour);
 
-	sDamping.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-	sWidth.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-	sWetLevel.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-	sDryLevel.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    sDamping.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    sWidth.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    sWetLevel.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    sDryLevel.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
 
-	//--------------------------------------------------------------------------
-	sDamping.onValueChange    = [this] { processor.setParameter(processor.stateVariable.damping, sDamping.getValue()); };
-	sWetLevel.onValueChange   = [this] { processor.setParameter(processor.stateVariable.wetLevel, sWetLevel.getValue()); };
-	sDryLevel.onValueChange   = [this] { processor.setParameter(processor.stateVariable.dryLevel, sDryLevel.getValue()); };
-	sWidth.onValueChange	  = [this] { processor.setParameter(processor.stateVariable.width, sWidth.getValue()); };
-	tFreezeMode.onClick		  = [this] { processor.setParameter(processor.stateVariable.freezeMode, tFreezeMode.getToggleState()); };
+    //--------------------------------------------------------------------------
+    sDamping.onValueChange    = [this] { processor.setParameter(processor.stateVariable.damping, sDamping.getValue()); };
+    sWetLevel.onValueChange   = [this] { processor.setParameter(processor.stateVariable.wetLevel, sWetLevel.getValue()); };
+    sDryLevel.onValueChange   = [this] { processor.setParameter(processor.stateVariable.dryLevel, sDryLevel.getValue()); };
+    sWidth.onValueChange      = [this] { processor.setParameter(processor.stateVariable.width, sWidth.getValue()); };
+    tFreezeMode.onClick          = [this] { processor.setParameter(processor.stateVariable.freezeMode, tFreezeMode.getToggleState()); };
 
-	//--------------------------------------------------------------------------
-	sDamping.setValue(processor.getParameter(processor.stateVariable.damping), dontSendNotification);
-	sWetLevel.setValue(processor.getParameter(processor.stateVariable.wetLevel), dontSendNotification);
-	sDryLevel.setValue(processor.getParameter(processor.stateVariable.dryLevel), dontSendNotification);
-	sWidth.setValue(processor.getParameter(processor.stateVariable.width), dontSendNotification);
-	tFreezeMode.setToggleState(processor.getParameter(processor.stateVariable.freezeMode), dontSendNotification);
+    //--------------------------------------------------------------------------
+    sDamping.setValue(processor.getParameter(processor.stateVariable.damping), dontSendNotification);
+    sWetLevel.setValue(processor.getParameter(processor.stateVariable.wetLevel), dontSendNotification);
+    sDryLevel.setValue(processor.getParameter(processor.stateVariable.dryLevel), dontSendNotification);
+    sWidth.setValue(processor.getParameter(processor.stateVariable.width), dontSendNotification);
+    tFreezeMode.setToggleState(processor.getParameter(processor.stateVariable.freezeMode), dontSendNotification);
 }
 
 ChurchAudioProcessorEditor::~ChurchAudioProcessorEditor()
@@ -130,28 +130,28 @@ void ChurchAudioProcessorEditor::paint (Graphics& g)
 
 void ChurchAudioProcessorEditor::resized()
 {
-	auto area = getLocalBounds();
-	auto column = area.removeFromLeft(getWidth()).reduced(5);
+    auto area = getLocalBounds();
+    auto column = area.removeFromLeft(getWidth()).reduced(5);
 
-	int h = 50;
+    int h = 50;
 
-	vuMeter.setBounds(column.removeFromTop(h * 2.50));
+    vuMeter.setBounds(column.removeFromTop(h * 2.50));
 
-	auto rowRoomSize = column.removeFromTop(h - 10);
+    auto rowRoomSize = column.removeFromTop(h - 10);
 
-	tRoomSizeSmall.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth() / 3.f).reduced(2));
-	tRoomSizeMedium.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth() / 2.f).reduced(2));
-	tRoomSizeLarge.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth()).reduced(2));
+    tRoomSizeSmall.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth() / 3.f).reduced(2));
+    tRoomSizeMedium.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth() / 2.f).reduced(2));
+    tRoomSizeLarge.setBounds(rowRoomSize.removeFromLeft(rowRoomSize.getWidth()).reduced(2));
 
-	auto rowDampAndWidth = column.removeFromTop(h * 1.5);
+    auto rowDampAndWidth = column.removeFromTop(h * 1.5);
 
-	sDamping.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth() / 2.f));
-	sWidth.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth()));
+    sDamping.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth() / 2.f));
+    sWidth.setBounds(rowDampAndWidth.removeFromLeft(rowDampAndWidth.getWidth()));
 
-	auto rowWetAndDry = column.removeFromTop(h * 1.5);
+    auto rowWetAndDry = column.removeFromTop(h * 1.5);
 
-	sWetLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth() / 2.f));
-	sDryLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth()));
+    sWetLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth() / 2.f));
+    sDryLevel.setBounds(rowWetAndDry.removeFromLeft(rowWetAndDry.getWidth()));
 
-	tFreezeMode.setBounds(column.removeFromTop(h).reduced(20,10));
+    tFreezeMode.setBounds(column.removeFromTop(h).reduced(20,10));
 }
