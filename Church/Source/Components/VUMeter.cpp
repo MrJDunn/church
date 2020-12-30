@@ -161,7 +161,7 @@ void VUMeter::drawNeedle(Graphics& g)
 	}
 
     // left
-    g.drawText(String(dbValue / 10), area.withX(area.getX() - 15), Justification::centred, false);
+    g.drawText("-" + String(abs(dbValue / 10)), area.withX(area.getX() - 15), Justification::centred, false);
 
     // mid
     g.drawText(String(abs(dbValue % 10)), area, Justification::centred, false);
